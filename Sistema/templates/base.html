@@ -6,11 +6,15 @@
     <meta name="description" content="Sistema para o aprendizado de flask">
     <meta name="keywords" content="HTML,CSS,JavaScript, Python, Flask">
     <meta name="author" content="UFMG Informatica Jr">
+
+    <link href="{{url_for('static',filename='style.css')}}" rel="stylesheet">
+
 </head>
 <body>
     <nav>
         <a href="{{url_for('index')}}">Página inicial</a>
         <a href="{{url_for('sobre')}}">Sobre</a>
+        <a href="{{url_for('cadastro')}}">Cadastro</a>
         <a href="#">Contato</a>
     </nav>
     {% block conteudo %}{% endblock %}

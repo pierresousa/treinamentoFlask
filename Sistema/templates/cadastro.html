@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Cadastro
+{% endblock %}
+
+{% block conteudo %}
+    <h1>Cadastro</h1>
+
+    {% if cadastado %}
+        <h1>{{nome}} foi cadastrado com sucesso!</h1> <br>
+    {% endif %}
+    
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        {{ form.nome.label }} {{ form.nome }} <br>
+        {{ form.idade.label }} {{ form.idade }} <br>
+        {{ form.curso.label }} {{ form.curso }} <br>
+        {{ form.email.label }} {{ form.email }} <br>
+        {{ form.telefone.label }} {{ form.telefone }} <br>
+
+        {{ form.submit.label }} {{ form.submit }}
+        
+    </form>
+{% endblock %}
