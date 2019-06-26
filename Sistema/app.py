@@ -17,9 +17,10 @@ def sobre():
 @app.route("/cadastro", methods=['GET', 'POST'])
 def cadastro():
     cadastrado = False
-    nome = " "
     form = CadastroForm()
+    nome = ""
     if form.validate_on_submit():
+        cadastrado = True
         nome = form.nome.data
     return render_template('cadastro.html', form=form, cadastrado=cadastrado, nome=nome)
 
