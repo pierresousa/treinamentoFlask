@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />  
 
-  <title>{% block titulo %} {% endblock %} - Administer</title>
+  <title>{% block title %}{% endblock %} - Administer</title>
 
   <!--MDBOOTSTRAP-->
   <!-- Font Awesome -->
@@ -21,10 +22,63 @@
   </head>
 
   <body>
-    
-    {% block conteudo %}
-      
+    <nav class="navbar navbar-expand-lg navbar-dark black">
+      <div class="container">
+          <a class="navbar-brand" href="{{ url_for('principal.index') }}"><strong>ADMINISTER</strong></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+            <!-- Links -->
+              <ul class="navbar-nav mr-auto">
+               
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Features</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Pricing</a>
+                </li>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Funcionarios</a>
+                  <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+
+                    <a class="dropdown-item" href="#">Novo Funcionário</a>
+                    <a class="dropdown-item" href="#">Cadastrados por mim</a>
+                    <a class="dropdown-item" href="#">Todos os Funcionários</a>
+
+                  </div>
+                </li>
+
+              </ul>
+              <!-- Links -->
+
+          </div>
+          <!-- Collapsible content -->
+      </div>
+    </nav>   
+
+    {% block content %}  
+
     {% endblock %}
+
+    <!-- Footer -->
+      <footer class="page-footer font-small black">
+      
+          <!-- Copyright -->
+          <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a href="https://www.sabaton.net/"> Administer</a>
+          </div>
+          <!-- Copyright -->
+        
+      </footer>
+      <!-- Footer -->
+      <!--Main Layout-->
 
 
     <!--MDBOOTSTRAP-->
