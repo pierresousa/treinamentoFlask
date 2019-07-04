@@ -5,6 +5,6 @@ principal = Blueprint('principal', __name__)
 
 @principal.route('/')
 def index():
-	form_login = LoginForm()
-	form_add = AdicionarUserForm()
-	return render_template('index.html', form_login=form_login, form_add=form_add)
+	form_login = LoginForm(prefix="form_login")
+	form_add = AdicionarUserForm(prefix="form_add")
+	return render_template('home.html', form_login=form_login, form_add=form_add)

@@ -229,9 +229,9 @@ body {
     }
     .modal-frame {
       position: absolute;
-      margin: 0 !important;
+      margin: 0;
       width: 100%;
-      max-width: 100% !important;
+      max-width: 100%;
       &.modal-bottom {
         bottom: 0;
       }
