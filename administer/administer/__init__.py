@@ -1,7 +1,11 @@
 import os
+from functools import wraps
 from flask import Flask, render_template, redirect, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
+
+login_manager = LoginManager()
 
 app = Flask(__name__)
 
@@ -23,14 +27,28 @@ Migrate(app,db)
 ################## CONFIGURA LOGIN ##########################
 #############################################################
 
+login_manager.init_app(app)
+login_manager.login_view = "principal.index"
 
+def login_required(role=["ANY"]):
+    def wrapper(fn):
+        @wraps(fn)
+        def decorated_view(*args, **kwargs):
 
-
+            if not current_user.is_authenticated():
+               return current_app.login_manager.unauthorized()
+            urole = current_app.login_manager.reload_user().get_urole()
+            if ( (urole not in role) and (role != ["ANY"])):
+                return current_app.login_manager.unauthorized()      
+            return fn(*args, **kwargs)
+        return decorated_view
+    return wrapper
 
 
 ############################################################
 ################## BLUEPRINTS ##############################
 ############################################################
+
 from administer.principal.views import principal
 from administer.usuarios.views import usuarios
 from administer.funcionarios.views import funcionarios

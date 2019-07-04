@@ -1,9 +1,12 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.funcionarios.forms import funcionario_form
 from administer.funcionarios.models import Funcionario
+from flask_login import LoginManager
+from administer import login_required
 
 funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
 
+@login_required()
 @funcionarios.route("/adicionar", methods=["POST", "GET"])
 def adicionar():
 	
@@ -13,6 +16,8 @@ def adicionar():
 
 		new_employer = Funcionario(form)
 
+		new_employer.admin_id = currentuser.id
+
 		db.session.add(new_employer)
 		db.session.commit()
 
@@ -21,6 +26,7 @@ def adicionar():
 	return render_template("adiciona_funcionario.html")
 
 
+@login_required()
 @funcionarios.route("/excluir/<int:id>", methods=["POST", "GET"])
 def excluir(id):
 	
@@ -38,6 +44,7 @@ def excluir(id):
 
 	return 200
 
+@login_required()
 @funcionarios.route("/editar/<int:id>", methods=["POST", "GET"])
 def editar(id):
 	
@@ -54,9 +61,16 @@ def editar(id):
 
 	return 200
 
-@funcionarios.route("/exibe")
-def exibe():
+@funcionarios.route("/exibe_all")
+def exibe_all():
 	
 	funcionarios = Funcionario.query.all()
 
 	return render_template("todos_funcionarios.html", funcionarios)
+
+@funcionarios.route("/exibe/<int:id>")
+def exibe(id):
+	
+	funcionario = Funcionario.query.get_or_404(id)
+
+	return render_template("funcionario.html", funcionario)
