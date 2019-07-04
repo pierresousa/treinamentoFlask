@@ -6,5 +6,27 @@ Listar
 
 {% block conteudo %}
     <h1>Listar</h1>
+    <ul>
+        {% for aluno in alunos %}
+            <li>
+                {{ aluno.nome }}
+                <a href="{{url_for('listar', id=aluno.id)}}">Excluir</a>
+                <button onclick="mudadisplay('editar{{aluno.id}}')">Editar</button>
+                <div style="display: none;" id="editar{{aluno.id}}">
+                    <form action="" method="POST">
+                        {{ editar.hidden_tag() }}
+                        {{ editar.id(value=aluno.id, style="display: none;")}}
+                        {{ editar.nome.label }} {{ editar.nome(value=aluno.nome) }} <br>
+                        {{ editar.curso.label }} {{ editar.curso(value=aluno.curso) }} <br>
+                        {{ editar.idade.label }} {{ editar.idade(value=aluno.idade) }} <br>
+                        {{ editar.email.label }} {{ editar.email(value=aluno.email) }} <br>
+                        {{ editar.telefone.label }} {{ editar.telefone(value=aluno.telefone) }} <br>
+
+                        {{ editar.submit }}
+                    </form>
+                </div>
+            </li><br>
+        {% endfor %}
+    </ul>
     
 {% endblock %}
