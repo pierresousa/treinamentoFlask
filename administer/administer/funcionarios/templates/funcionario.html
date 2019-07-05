@@ -14,21 +14,28 @@
             <p class="h4 mb-4">Editar funcionário</p>
             <p>Trocar informações sobre os funcionários</p>
 
-            <!-- Name -->
-            Nome:<br/>
-            {{ edit_funcionario.nome(class="form-control mb-4") }}
-            Email:<br/>
-            {{ edit_funcionario.email(class="form-control mb-4") }}
-            Idade:<br/>
-            {{ edit_funcionario.idade(class="form-control mb-4") }}
-            Setor:<br/>
-            {{ edit_funcionario.setor(class="browser-default custom-select") }}
-            
+           <!-- Name -->
+            <input type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Name">
+
+            <!-- Email -->
+            <input type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+            <!-- Idade -->
+            <input type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Idade">
+
+            <select class="browser-default custom-select">
+              <option value="0">Eqp_Adm_Fin</option>
+              <option value="1">Dev</option>
+              <option value="2">Eqp_Proj</option>
+              <option value="3">Eqp_RH</option>
+              <option value="4">Eqp_Markt</option>
+              <option value="5">Eqp_Pres</option>
+              <option value="6">Eqp_Neg</option>    
+            </select>
+
             <!-- Sign in button -->
-            <div class="modal-footer d-flex justify-content-center">
-                {{ edit_funcionario.submit(class="btn btn-indigo", value="Editar Funcionário") }}
-              <i class="fas fa-paper-plane-o ml-1"></i>
-            </div>
+            <button class="btn btn-info btn-block" type="submit">Alterar Funcionário</button>
+
 
 
         </form>

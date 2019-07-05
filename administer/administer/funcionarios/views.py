@@ -2,20 +2,29 @@ from flask import (render_template, request, Blueprint, url_for, redirect, reque
 from administer.funcionarios.forms import funcionario_form
 from administer.funcionarios.models import Funcionario
 from flask_login import LoginManager, current_user
-from administer import login_required
+from administer import login_required, db
 
 funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
+
+def valida_formulario(form):
+
+	if (len(form.nome.data) <= 3 or len(form.nome.data) >= 120):
+		return False
+	if (len(form.email.data) <= 3 or len(form.nome.data) >= 120):
+		return False
+	if (len(form.nome.data) <= 3 or len(form.nome.data) >= 120):
+		return False
+
+
 
 @login_required()
 @funcionarios.route("/adicionar", methods=["POST", "GET"])
 def adicionar():
 	
 	add_funcionario = funcionario_form()
-	print(add_funcionario)
-	"""print(add_funcionario)
-	print(add_funcionario.validate())
 	
 	if add_funcionario.validate_on_submit():
+		print("Errado, to aqui")
 
 		new_employer = Funcionario(add_funcionario)
 
@@ -23,10 +32,11 @@ def adicionar():
 
 		db.session.add(new_employer)
 		db.session.commit()
-		flash("Adicionado", "danger")"""
+		flash("Adicionado", "danger")
 	
-	flash("deu ruim", "danger")
+	flash("Deu Ruim", "danger")
 
+	print("To aqui tb")
 
 	return redirect(url_for('funcionarios.exibe_all'))
 
@@ -75,7 +85,7 @@ def exibe_all():
 	add_funcionario = funcionario_form()
 
 	page = request.args.get('page', 1, type=int)
-	funcionarios = Funcionario.query.all().paginate(page=page, per_page=12)
+	funcionarios = Funcionario.query.paginate(page=page, per_page=12)
 	return render_template("todos_funcionarios.html", funcionarios=funcionarios, add_funcionario=add_funcionario)
 
 @login_required()
@@ -83,11 +93,6 @@ def exibe_all():
 def exibe(id):
 	
 	add_funcionario = funcionario_form()
-	
-	edit_funcionario = funcionario_form()
+	funcionario = Funcionario.query.get_or_404(id)
 
-	#funcionario = Funcionario.query.get_or_404(id)
-
-	#return render_template("funcionario.html", funcionario)
-	return render_template("funcionario.html", add_funcionario=add_funcionario, 
-							edit_funcionario=edit_funcionario)
+	return render_template("funcionario.html", add_funcionario=add_funcionario, funcionario=funcionario)
