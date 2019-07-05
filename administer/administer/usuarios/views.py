@@ -1,6 +1,6 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.usuarios.models import Admin
-from administer.usuarios.forms import AdicionarUserForm, LoginForm
+from administer.usuarios.forms import AdicionarUserForm, LoginForm, EditarUserForm
 from flask_login import LoginManager, current_user, login_user,logout_user
 from administer import login_required
 from administer.usuarios.avatar import adicionar_avatar
@@ -8,6 +8,7 @@ from flask_bcrypt import Bcrypt
 from administer import db
 from administer.funcionarios.models import Funcionario
 from administer.funcionarios.forms import funcionario_form
+from datetime import datetime
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates/usuarios')
 
@@ -88,8 +89,13 @@ def logout():
 def perfil():
 	
 	add_funcionario = funcionario_form()
+	editar_user = EditarUserForm()
+	nova = current_user.data_nasc.strftime("%Y-%m-%d")
+	
+	print(current_user.data_nasc)
+	print(nova)
 
-	return render_template("perfil.html", add_funcionario=add_funcionario)
+	return render_template("perfil.html", add_funcionario=add_funcionario, editar_user=editar_user)
 
 @login_required()
 @usuarios.route("/funcionarios", methods=["POST", "GET"])
