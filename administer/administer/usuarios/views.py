@@ -1,6 +1,6 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.usuarios.models import Admin
-from administer.usuarios.forms import AdicionarUserForm, LoginForm
+from administer.usuarios.forms import AdicionarUserForm, LoginForm, EditarUserForm
 from flask_login import LoginManager, current_user, login_user,logout_user
 from administer import login_required
 from administer.usuarios.avatar import adicionar_avatar
