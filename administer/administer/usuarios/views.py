@@ -104,7 +104,7 @@ def perfil():
 
 		flash("Dados atualizados!","success")
 
-	return render_template("perfil.html", add_funcionario=add_funcionario)
+	return render_template("perfil.html", add_funcionario=add_funcionario, editar_user=editar_user)
 
 @login_required()
 @usuarios.route("/funcionarios", methods=["POST", "GET"])
