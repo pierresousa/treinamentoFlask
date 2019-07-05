@@ -18,8 +18,9 @@ def dashboard():
 def adicionar():
 
 	form = AdicionarUserForm()
-
-	if form.validate_on_submit() and not Admin.query.filter_by(username=form.username.data).first() and not Admin.query.filter_by(email=form.email.data).first(): 
+	print(form.submit.data)
+	print("Adicionar")
+	if form.validate_on_submit(): 
 		bcript = Bcrypt()
 
 		nome = form.nome.data
@@ -32,17 +33,11 @@ def adicionar():
 		avatar = adicionar_avatar(form.foto.data, username) 
 		
 		novo_user = Admin(nome, email, username, data_nasc, hhash, avatar)
-
+		print(novo_user)
 		db.session.add(novo_user)
 		db.session.commit()
 
 		return redirect(url_for('principal.index'))
-
-	if Admin.query.filter_by(username=form.username.data).first():
-		flash(f"Esse nome de usuário já existe.", "warning")
-
-	if Admin.query.filter_by(email=form.email.data).first():
-		flash(f"Esse e-mail já está em uso.", "warning")
 
 	return redirect(url_for('principal.index'))
 
