@@ -1,4 +1,5 @@
 from administer import db
+from flask_bcrypt import Bcrypt
 
 class Admin(db.Model):
 	"""docstring for Admin"""
@@ -7,17 +8,29 @@ class Admin(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	nome = db.Column(db.String(120), nullable=False)
-	apelido = db.Column(db.String(120), nullable=False)
+	email = db.Column(db.String(120), nullable=False, unique=True)
+	username = db.Column(db.String(120), nullable=False, unique=True)
 	data_nasc = db.Column(db.DateTime, nullable=False)
+	hhash = db.Column(db.String)
+
 	urole = db.Column(db.String(80), default="Admin")
+
+	avatar = db.Column(db.String(120), default="default_profile.png")
 
 	funcionarios = db.relationship('Funcionarios', backref='admin', uselist=True)
 	
-	def __init__(self, nome, apelido, data_nasc):
+	def __init__(self, nome, email, username, data_nasc, hhash, avatar):
 		self.nome = nome
-		self.apelido = apelido
+		self.email = email
+		self.username = username
 		self.data_nasc = data_nasc
+		self.hhash = hhash
+		self.avatar = avatar
 
 	def get_urole(self):
 
 		return self.urole
+
+	def check_password(self, pasword):
+		bcript = Bcrypt()
+		return bcript.check_password_hash(self.hhash, pasword)
