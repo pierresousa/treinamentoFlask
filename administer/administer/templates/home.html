@@ -85,7 +85,7 @@
                     
                     {{ form_add.nome(class="form-control mb-4", placeholder="Nome") }}
                     {{ form_add.email(class="form-control mb-4", placeholder="Email", type="email") }}
-                    {{ form_add.apelido(class="form-control mb-4", placeholder="Apelido") }}
+                    {{ form_add.username(class="form-control mb-4", placeholder="Nome de usuario") }}
                     {{ form_add.data_nascimento(class="form-control mb-4", placeholder="Data de nascimento", type="date") }}
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -118,7 +118,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST">
+            <form action="{{url_for('usuarios.login')}}" method="POST">
                 <div class="modal-body mx-3">
                     
                     {{ form_login.hidden_tag() }}

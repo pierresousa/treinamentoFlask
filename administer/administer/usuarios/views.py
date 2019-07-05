@@ -1,10 +1,11 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.usuarios.models import Admin
-from administer.usuarios.forms import AdicionarUserForm
+from administer.usuarios.forms import AdicionarUserForm, LoginForm
 from flask_login import LoginManager, current_user, login_user,login_required,logout_user
 from administer import login_required
 from administer.usuarios.avatar import adicionar_avatar
 from flask_bcrypt import Bcrypt
+from administer import db
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates')
 
@@ -17,27 +18,57 @@ def dashboard():
 @usuarios.route('/cadastro', methods=['POST', 'GET'])
 def adicionar():
 
-	form = AdicionarUserForm()
-	print(form.submit.data)
-	print("Adicionar")
-	if form.validate_on_submit(): 
+	form_add = AdicionarUserForm(prefix="form_add")
+
+	if form_add.validate_on_submit() and not Admin.query.filter_by(username=form_add.username.data).first() and not Admin.query.filter_by(email=form_add.email.data).first(): 
 		bcript = Bcrypt()
 
-		nome = form.nome.data
-		username = form.username.data
-		email = form.email.data
-		data_nasc = form.data_nascimento.data
+		nome = form_add.nome.data
+		username = form_add.username.data
+		email = form_add.email.data
+		data_nasc = form_add.data_nascimento.data
 
-		hhash = bcript.generate_password_hash(form.senha.data)
+		hhash = bcript.generate_password_hash(form_add.senha.data)
 
-		avatar = adicionar_avatar(form.foto.data, username) 
+		avatar = adicionar_avatar(form_add.foto.data, username) 
 		
 		novo_user = Admin(nome, email, username, data_nasc, hhash, avatar)
 		print(novo_user)
 		db.session.add(novo_user)
 		db.session.commit()
 
+		flash("Agradecemos o seu cadastro. Entre agora mesmo na sua conta e aproveite o Administer.", "success")
+
 		return redirect(url_for('principal.index'))
+
+	if Admin.query.filter_by(username=form_add.username.data).first():
+		flash(f"Esse nome de usuário já existe.", "warning")
+
+	if Admin.query.filter_by(email=form_add.email.data).first():
+		flash(f"Esse e-mail já está em uso.", "warning")
+
+	return redirect(url_for('principal.index'))
+
+@usuarios.route('/login', methods=['POST', 'GET'])
+def login():
+	form_login = LoginForm(prefix="form_login")
+
+	if form_login.validate_on_submit():
+		user = Admin.query.filter_by(email=form_login.email.data).first()
+
+		if user is not None:
+			
+			if user.check_password(form_login.senha.data):
+
+				login_user(user, remember=form_login.lembrar.data)
+				flash("Você foi logado com sucesso.", "success")
+			
+				return redirect(url_for('usuarios.dashboard'))
+
+			else:
+				flash("Email e/ou senha incorretos", "alert")
+		else:
+			flash("Email e/ou senha incorretos", "warning")
 
 	return redirect(url_for('principal.index'))
 

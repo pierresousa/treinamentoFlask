@@ -17,7 +17,7 @@ class Admin(db.Model):
 
 	avatar = db.Column(db.String(120), default="default_profile.png")
 
-	funcionarios = db.relationship('funcionarios', backref='admin', uselist=True)
+	funcionarios = db.relationship('Funcionario', backref='admin', uselist=True)
 	
 	def __init__(self, nome, email, username, data_nasc, hhash, avatar):
 		self.nome = nome

@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
 class AdicionarUserForm(FlaskForm):
     nome = StringField("Nome", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(message="Campo Obrigatório"), Email(message="Campo Obrigatório"), Length(min=3, max=120, message="Minimo de 3 caracteres e máximo de 120 por favor!")])
-    apelido = StringField("Apelido", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
     data_nascimento = DateField("Data de nascimento", format='%Y-%m-%d', validators=[DataRequired()])
     foto = FileField('Foto', validators=[DataRequired(),FileAllowed(['jpg', 'png', 'jpeg'])])
     senha = PasswordField("Senha", validators=[DataRequired(), EqualTo('conf_senha', message="As senhas devem ser iguais."), Length(min=0, max=250, message="Minimo de 3 caracteres e máximo de 250 por favor!")])
