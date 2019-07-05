@@ -15,15 +15,15 @@
             <p>Trocar informações sobre os funcionários</p>
 
            <!-- Name -->
-            <input type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Name">
+            <input id="name" type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Name">
 
             <!-- Email -->
-            <input type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail">
+            <input id="email" type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail">
 
             <!-- Idade -->
-            <input type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Idade">
+            <input id="idade" type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Idade">
 
-            <select class="browser-default custom-select">
+            <select id="equipe" class="browser-default custom-select">
               <option value="0">Eqp_Adm_Fin</option>
               <option value="1">Dev</option>
               <option value="2">Eqp_Proj</option>
@@ -34,14 +34,54 @@
             </select>
 
             <!-- Sign in button -->
-            <button class="btn btn-info btn-block" type="submit">Alterar Funcionário</button>
-
-
+            <button class="btn btn-info btn-block" type="submit" onclick="atualiza()">Alterar Funcionário</button>
 
         </form>
         <!-- Default form subscription -->
      
    </main>
 </div>
+
+<script type="text/javascript">
+    
+    function atualiza(){
+        
+        let nome = $("#nome");
+        let email = $("#email");
+        let idade = $("#idade")
+        let setor = $("#setor")
+
+        var update = {
+            nome: nome.value,
+            email: email.value,
+            idade: idade.value,
+            setor: setor.value
+        };
+
+        fetch('${window.origin}/editar/{{funcionario.id}}', {
+            
+            methods: "POST",
+            credentials: "include", //Pega as informações em coock e coloca na requisição
+            body: JSON.stringfy(update),
+            cache: "no-cache",
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+
+        }).then(function (response){
+
+            if(response.status !== 200){
+                console.log("Response status foi boicotado: ${response.status}");
+                return ;
+            }
+
+            response.json().then(function (data){
+                console.log(data)
+            })
+        })
+
+    }
+
+</script>
 
 {% endblock %}
