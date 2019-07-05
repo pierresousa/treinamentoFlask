@@ -7,25 +7,32 @@
 
 <div style="padding-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <main style="padding-top: 20px" class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid demo-content">
-            
-            <section>    
+        <div class="mdl-grid demo-content text-center">
                 <!--INFORMAÇÕES SOBRE O USUARIO-->
-                <div class="container">                    
-                    <!--NOME-->
+                <div class="container">  
+                    <!--AVATAR-->
                     <div class="row">
-                        <div class="col-sm-4">
-                            Nome
+                        <div class="col-sm-12 text-center">
+                            <img align="center" src="{{url_for('static', filename='img/avatares/'+current_user.avatar)}}" class="rounded-circle"  style="object-fit: cover; width: 150px!important; height: 150px!important;">
                         </div>
-                        <div class="col-sm-6">
-                            {{ current_user.nome }}
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-light" onclick="mudarDisplay('editar_perfil')">Editar</button>
-                        </div>
-                    </div>
+                    </div>      
+                    <dl class="row text-left">
+                        <dt class="col-sm-3">Nome</dt>
+                        <dd class="col-sm-9">{{current_user.nome}}</dd>
+                        
+                        <dt class="col-sm-3">Nome de usuario</dt>
+                        <dd class="col-sm-9">{{current_user.username}}</dd>
+                        
+                        <dt class="col-sm-3">E-mail</dt>
+                        <dd class="col-sm-9">{{current_user.email}}</dd>
+                        
+                        <dt class="col-sm-3 text-truncate">Data de nascimento</dt>
+                        <dd class="col-sm-9">{{current_user.data_nasc|converte}}</dd>
+                    </dl>
+
+                    
                     <!--FORMULARIO PARA EDITAR PERFIL-->
-                    <div id="editar_perfil" style=" display: block;">
+                    <div class="row" id="editar_perfil" style=" display: block;">
                         <form method="POST">
                             {{ editar_user.hidden_tag() }}
                             <div class="form-group">
@@ -56,14 +63,13 @@
                                 {{ editar_user.conf_senha(class="form-control", placeholder="Confirme sua senha") }}
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-secondary" onclick="mudarDisplay('editar_nome')">Cancelar</button>
+                                <button type="button" class="btn btn-secondary" onclick="mudarDisplay('editar_perfil')">Cancelar</button>
                                 {{ editar_user.submit(class="btn btn-primary") }}
                             </div>
                         </form>
                     </div>
                     <div class="dropdown-divider"></div>
                 </div>
-            </section>
 
         </div>
     </main>

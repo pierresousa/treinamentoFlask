@@ -90,11 +90,7 @@ def perfil():
 	
 	add_funcionario = funcionario_form()
 	editar_user = EditarUserForm()
-	nova = current_user.data_nasc.strftime("%Y-%m-%d")
 	
-	print(current_user.data_nasc)
-	print(nova)
-
 	return render_template("perfil.html", add_funcionario=add_funcionario, editar_user=editar_user)
 
 @login_required()
