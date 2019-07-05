@@ -4,6 +4,29 @@
 
 {% block content %}
 
+<div style="padding-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <main style="padding-top: 20px" class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+            
+            <!--Cards-->
+            <div class="demo-cards mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+                <div class="demo-updates mdl-card mdl-shadow--12dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                                aria-selected="true">Home</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                        </div>  
+                </div>
+            </div>
+            <!--Cards-->
     
+        </div>
+        </main>
+    </div>
+    <!-- A parte de cima é só um teste para Cards, o dashboard é abaixo -->
 
 {% endblock %}
