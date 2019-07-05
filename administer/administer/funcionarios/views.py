@@ -1,7 +1,7 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.funcionarios.forms import funcionario_form
 from administer.funcionarios.models import Funcionario
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from administer import login_required
 
 funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
@@ -11,17 +11,24 @@ funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
 def adicionar():
 	
 	add_funcionario = funcionario_form()
-
+	print(add_funcionario)
+	"""print(add_funcionario)
+	print(add_funcionario.validate())
+	
 	if add_funcionario.validate_on_submit():
 
 		new_employer = Funcionario(add_funcionario)
 
-		new_employer.admin_id = currentuser.id
+		new_employer.admin_id = current_user.id
 
 		db.session.add(new_employer)
 		db.session.commit()
+		flash("Adicionado", "danger")"""
+	
+	flash("deu ruim", "danger")
 
-	return redirect(url_for('funcionarios.exibe'))
+
+	return redirect(url_for('funcionarios.exibe_all'))
 
 	
 

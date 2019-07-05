@@ -96,7 +96,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form action="{{url_for('funcionarios.adicionar')}}">
+          <form action="{{url_for('funcionarios.adicionar')}}" method="POST">
             {{ add_funcionario.hidden_tag()}}
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
@@ -174,7 +174,15 @@
       <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalSubscriptionForm">Launch
         Modal Subscription Form</a>
     </div>
-    -->   
+    -->
+    {% for mess in get_flashed_messages() %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <button type="button" class="fade close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ mess }}
+                    </div>
+                {% endfor %}
     {%block content%} 
 
     {% endblock %}
