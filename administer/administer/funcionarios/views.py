@@ -10,20 +10,20 @@ funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
 @funcionarios.route("/adicionar", methods=["POST", "GET"])
 def adicionar():
 	
-	form = funcionario_form()
+	add_funcionario = funcionario_form()
 
-	if form.validate_on_submit():
+	if add_funcionario.validate_on_submit():
 
-		new_employer = Funcionario(form)
+		new_employer = Funcionario(add_funcionario)
 
 		new_employer.admin_id = currentuser.id
 
 		db.session.add(new_employer)
 		db.session.commit()
 
-		return redirect(url_for('funcionarios.exibe'))
+	return redirect(url_for('funcionarios.exibe'))
 
-	return render_template("adiciona_funcionario.html")
+	
 
 
 @login_required()
@@ -63,9 +63,9 @@ def editar(id):
 
 @funcionarios.route("/exibe_all")
 def exibe_all():
-	
-	funcionarios = Funcionario.query.all()
 
+	page = request.args.get('page', 1, type=int)
+	funcionarios = Funcionario.query.all().paginate(page=page, per_page=12)
 	return render_template("todos_funcionarios.html", funcionarios)
 
 @funcionarios.route("/exibe/<int:id>")

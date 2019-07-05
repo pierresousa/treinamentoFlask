@@ -9,11 +9,13 @@ from administer import db
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates')
 
-@login_required()
+#@login_required()
 @usuarios.route("/dashboard", methods=["POST", "GET"])
 def dashboard():
 	
-	return render_template("dashboard.html")
+	add_funcionario = funcionario_form()
+
+	return render_template("dashboard.html", add_funcionario=add_funcionario)
 
 @usuarios.route('/cadastro', methods=['POST', 'GET'])
 def adicionar():
@@ -82,4 +84,6 @@ def perfil():
 @usuarios.route("/funcionarios", methods=["POST", "GET"])
 def funcionarios():
 	
-	pass
+	page = request.args.get('page', 1, type=int)
+	funcionarios = Funcionario.query.filter_by(admin_id=current_user.id).paginate(page=page, per_page=12)
+	return render_template("todos_funcionarios.html", funcionarios)
