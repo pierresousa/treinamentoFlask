@@ -1,6 +1,10 @@
-from administer import db
+from administer import db, login_manager
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Admin.query.get(user_id)
 
 class Admin(db.Model, UserMixin):
 	"""docstring for Admin"""
