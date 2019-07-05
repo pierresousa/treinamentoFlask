@@ -11,7 +11,7 @@ from administer.funcionarios.forms import funcionario_form
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates')
 
-#@login_required()
+@login_required()
 @usuarios.route("/dashboard", methods=["POST", "GET"])
 def dashboard():
 	
@@ -93,6 +93,8 @@ def perfil():
 @usuarios.route("/funcionarios", methods=["POST", "GET"])
 def funcionarios():
 	
+	add_funcionario = funcionario_form()
+
 	page = request.args.get('page', 1, type=int)
 	funcionarios = Funcionario.query.filter_by(admin_id=current_user.id).paginate(page=page, per_page=12)
-	return render_template("todos_funcionarios.html", funcionarios=funcionarios)
+	return render_template("todos_funcionarios.html", funcionarios=funcionarios, add_funcionario=add_funcionario)

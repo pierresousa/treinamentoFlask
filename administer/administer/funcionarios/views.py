@@ -65,11 +65,13 @@ def editar(id):
 @funcionarios.route("/exibe_all")
 def exibe_all():
 
+	add_funcionario = funcionario_form()
+
 	page = request.args.get('page', 1, type=int)
 	funcionarios = Funcionario.query.all().paginate(page=page, per_page=12)
-	return render_template("todos_funcionarios.html", funcionarios)
+	return render_template("todos_funcionarios.html", funcionarios=funcionarios, add_funcionario=add_funcionario)
 
-#@login_required()
+@login_required()
 @funcionarios.route("/exibe/<int:id>")
 def exibe(id):
 	
