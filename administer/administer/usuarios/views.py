@@ -9,7 +9,7 @@ from administer import db
 from administer.funcionarios.models import Funcionario
 from administer.funcionarios.forms import funcionario_form
 
-usuarios = Blueprint('usuarios', __name__,template_folder='templates')
+usuarios = Blueprint('usuarios', __name__,template_folder='templates/usuarios')
 
 @login_required()
 @usuarios.route("/dashboard", methods=["POST", "GET"])
@@ -87,7 +87,9 @@ def logout():
 @usuarios.route("/perfil", methods=["POST", "GET"])
 def perfil():
 	
-	pass
+	add_funcionario = funcionario_form()
+
+	return render_template("perfil.html", add_funcionario=add_funcionario)
 
 @login_required()
 @usuarios.route("/funcionarios", methods=["POST", "GET"])
