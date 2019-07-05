@@ -79,16 +79,27 @@
                 <!--Conteudo-->
                 <h2>Não é cadastrado? Cadastre-se agora!</h2><br>
                 <form class="border border-light p-5" method="POST" enctype="multipart/form-data">
-                  {{ form_add.hidden_tag()}}
-                  
-                  <p class="h4 mb-4 text-center">Preencher dados</p>
-                  
-                  {{ form_add.nome(class="form-control mb-4", placeholder="Nome") }}
-                  {{ form_add.apelido(class="form-control mb-4", placeholder="Apelido") }}
-                  {{ form_add.data_nascimento(class="form-control mb-4", placeholder="Data de nascimento", type="date") }}
-                  
-                  {{ form_add.submit(class="btn btn-info btn-block my-4") }}                      
-              </form>
+                    {{ form_add.hidden_tag()}}
+                    
+                    <p class="h4 mb-4 text-center">Preencher dados</p>
+                    
+                    {{ form_add.nome(class="form-control mb-4", placeholder="Nome") }}
+                    {{ form_add.email(class="form-control mb-4", placeholder="Email", type="email") }}
+                    {{ form_add.apelido(class="form-control mb-4", placeholder="Apelido") }}
+                    {{ form_add.data_nascimento(class="form-control mb-4", placeholder="Data de nascimento", type="date") }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            {{ form_add.foto(class="custom-file-input", id="inputGroupFile01") }}
+                            <label class="custom-file-label" for="inputGroupFile01">Escolha uma foto</label>
+                        </div>
+                    </div><br>
+                    {{ form_add.senha(class="form-control mb-4", placeholder="Senha") }}
+                    {{ form_add.conf_senha(class="form-control mb-4", placeholder="Confirmar senha") }}
+                    {{ form_add.submit(class="btn btn-info btn-block my-4") }}                      
+                </form>
     
             </div>
         </div>
@@ -102,7 +113,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Entrar na sua conta</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Entrar na conta</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -141,7 +152,7 @@
 
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">© 2018 Copyright:
-          <a href="https://www.sabaton.net/"> Sabaton</a>
+          <a href="https://www.facebook.com/ufmginformaticajr/"> Administer</a>
         </div>
         <!-- Copyright -->
       
