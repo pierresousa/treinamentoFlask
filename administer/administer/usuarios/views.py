@@ -76,6 +76,13 @@ def login():
 
 	return redirect(url_for('principal.index'))
 
+@usuarios.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	flash("Você foi deslogado com sucesso.", "success")
+	return redirect(url_for('principal.index'))
+
 @login_required()
 @usuarios.route("/perfil", methods=["POST", "GET"])
 def perfil():
