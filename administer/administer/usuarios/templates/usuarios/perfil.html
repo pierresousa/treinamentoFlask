@@ -4,75 +4,70 @@
 
 {% block content %}
 
-
-<div style="padding-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    <main style="padding-top: 20px" class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid demo-content text-center">
-                <!--INFORMAÇÕES SOBRE O USUARIO-->
-                <div class="container">  
-                    <!--AVATAR-->
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <img align="center" src="{{url_for('static', filename='img/avatares/'+current_user.avatar)}}" class="rounded-circle"  style="object-fit: cover; width: 150px!important; height: 150px!important;">
-                        </div>
-                    </div>      
-                    <dl class="row text-left">
-                        <dt class="col-sm-3">Nome</dt>
-                        <dd class="col-sm-9">{{current_user.nome}}</dd>
-                        
-                        <dt class="col-sm-3">Nome de usuario</dt>
-                        <dd class="col-sm-9">{{current_user.username}}</dd>
-                        
-                        <dt class="col-sm-3">E-mail</dt>
-                        <dd class="col-sm-9">{{current_user.email}}</dd>
-                        
-                        <dt class="col-sm-3 text-truncate">Data de nascimento</dt>
-                        <dd class="col-sm-9">{{current_user.data_nasc|converte}}</dd>
-                    </dl>
-
-                    
-                    <!--FORMULARIO PARA EDITAR PERFIL-->
-                    <div class="row" id="editar_perfil" style=" display: block;">
-                        <form method="POST">
-                            {{ editar_user.hidden_tag() }}
-                            <div class="form-group">
-                                {{ editar_user.nome(class="form-control", value = current_user.nome) }}
-                            </div>
-                            <div class="form-group">
-                                {{ editar_user.username(class="form-control", value = current_user.username) }}
-                            </div>
-                            <div class="form-group">
-                                {{ editar_user.email(class="form-control", value = current_user.email) }}
-                            </div>
-                            <div class="form-group">
-                                {{ editar_user.data_nascimento(class="form-control", type="date", value = current_user.data_nasc|converte) }}
-                            </div>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                </div>
-                                <div class="custom-file">
-                                    {{ editar_user.foto(class="custom-file-input", id="inputGroupFile01", value=current_user.avatar) }}
-                                    <label class="custom-file-label" for="inputGroupFile01">Escolha uma foto</label>
-                                </div>
-                            </div><br>
-                            <div class="form-group">
-                                {{ editar_user.senha(class="form-control", placeholder="Digite sua senha") }}
-                            </div>
-                            <div class="form-group">
-                                {{ editar_user.conf_senha(class="form-control", placeholder="Confirme sua senha") }}
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn btn-secondary" onclick="mudarDisplay('editar_perfil')">Cancelar</button>
-                                {{ editar_user.submit(class="btn btn-primary") }}
-                            </div>
-                        </form>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                </div>
-
+<!--INFORMAÇÕES SOBRE O USUARIO-->  
+    <!--AVATAR-->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <img align="center" src="{{url_for('static', filename='img/avatares/'+current_user.avatar)}}" class="rounded-circle"  style="object-fit: cover; width: 150px!important; height: 150px!important;">
         </div>
-    </main>
-</div>
+    </div>      
+    <dl class="row text-left">
+        <dt class="col-sm-3">Nome</dt>
+        <dd class="col-sm-9">{{current_user.nome}}</dd>
+        
+        <dt class="col-sm-3">Nome de usuario</dt>
+        <dd class="col-sm-9">{{current_user.username}}</dd>
+        
+        <dt class="col-sm-3">E-mail</dt>
+        <dd class="col-sm-9">{{current_user.email}}</dd>
+        
+        <dt class="col-sm-3 text-truncate">Data de nascimento</dt>
+        <dd class="col-sm-9">{{current_user.data_nasc|converte}}</dd>
+    </dl>
+    <div class="row">
+        <div class="col-sm-12 text-left">
+            <button type="button" class="btn btn-secondary" onclick="mudarDisplay('editar_perfil')">Editar</button>
+        </div>
+    </div>   
+    
+    <!--FORMULARIO PARA EDITAR PERFIL-->
+    <div class="row" id="editar_perfil" style=" display: none;">
+        <div class="dropdown-divider"></div>
+        <form method="POST" enctype="multipart/form-data">
+            {{ editar_user.hidden_tag() }}
+            <div class="form-group">
+                {{ editar_user.nome(class="form-control", value = current_user.nome) }}
+            </div>
+            <div class="form-group">
+                {{ editar_user.username(class="form-control", value = current_user.username) }}
+            </div>
+            <div class="form-group">
+                {{ editar_user.email(class="form-control", value = current_user.email) }}
+            </div>
+            <div class="form-group">
+                {{ editar_user.data_nascimento(class="form-control", type="date", value = current_user.data_nasc|converte) }}
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                </div>
+                <div class="custom-file">
+                    {{ editar_user.foto(class="custom-file-input", id="inputGroupFile01", value=current_user.avatar) }}
+                    <label class="custom-file-label" for="inputGroupFile01">Escolha uma foto</label>
+                </div>
+            </div><br>
+            <div class="form-group">
+                {{ editar_user.senha(class="form-control", placeholder="Digite sua senha") }}
+            </div>
+            <div class="form-group">
+                {{ editar_user.conf_senha(class="form-control", placeholder="Confirme sua senha") }}
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-secondary" onclick="mudarDisplay('editar_perfil')">Cancelar</button>
+                {{ editar_user.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+<!--FIM-->
 
 {% endblock %}
