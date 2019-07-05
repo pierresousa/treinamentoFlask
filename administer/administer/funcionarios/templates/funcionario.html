@@ -1,0 +1,43 @@
+{% extends "base.html"%}
+
+{%block title%} Home  {% endblock %}
+
+{% block content %}
+
+<div style="pediting-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <main style="pediting-top: 20px" class="mdl-layout__content mdl-color--grey-100">
+     
+
+        <!-- Default form subscription -->
+        <form class="text-center border border-light p-5">
+
+            <p class="h4 mb-4">Editar funcionário</p>
+            <p>Trocar informações sobre os funcionários</p>
+            <p>
+                <a href="" target="_blank">See the last newsletter</a>
+            </p>
+
+            <!-- Name -->
+            Nome:<br/>
+            {{ edit_funcionario.nome(class="form-control mb-4") }}
+            Email:<br/>
+            {{ edit_funcionario.email(class="form-control mb-4") }}
+            Idade:<br/>
+            {{ edit_funcionario.idade(class="form-control mb-4") }}
+            Setor:<br/>
+            {{ edit_funcionario.setor(class="browser-default custom-select") }}
+            
+            <!-- Sign in button -->
+            <div class="modal-footer d-flex justify-content-center">
+                {{ edit_funcionario.submit(class="btn btn-indigo", value="Editar Funcionário") }}
+              <i class="fas fa-paper-plane-o ml-1"></i>
+            </div>
+            
+
+        </form>
+        <!-- Default form subscription -->
+     
+   </main>
+</div>
+
+{% endblock %}
