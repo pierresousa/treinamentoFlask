@@ -1,4 +1,5 @@
-from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
+from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort,
+					make_response, jsonify)
 from administer.funcionarios.forms import funcionario_form
 from administer.funcionarios.models import Funcionario
 from flask_login import LoginManager, current_user
@@ -6,14 +7,33 @@ from administer import login_required, db
 
 funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
 
-def valida_formulario(form):
+def valida_formulario(data):
 
-	if (len(form.nome.data) <= 3 or len(form.nome.data) >= 120):
+	if (len(data["nome"]) <= 3 or len(data["nome"]) >= 120):
 		return False
-	if (len(form.email.data) <= 3 or len(form.nome.data) >= 120):
+
+
+	try:
+
+		len_email1 = len(data["email"].split("@"))
+		len_email2 = len(data["email"].split("@")[-1].split('.'))
+
+		if (len_email1 <= 0 or len_email >= 2):
+			return False
+		if (len_email2 <= 0):
+			return False
+
+		if (int(data["idade"]) <= 14 or int(data["idade"]) >= 180):
+			return False
+
+		if (int(data["setor"]) > 6 or int(data["setor"]) < 0):
+			return False
+
+	except:
+
 		return False
-	if (len(form.nome.data) <= 3 or len(form.nome.data) >= 120):
-		return False
+
+	return True
 
 
 
@@ -33,12 +53,13 @@ def adicionar():
 		db.session.add(new_employer)
 		db.session.commit()
 		flash("Adicionado", "danger")
+		
+		return redirect(url_for('funcionarios.exibe_all'))
+
 	
 	flash("Deu Ruim", "danger")
 
-	print("To aqui tb")
-
-	return redirect(url_for('funcionarios.exibe_all'))
+	return redirect(url_for('funcionarios.dashboard'))
 
 	
 
@@ -67,16 +88,21 @@ def editar(id):
 	
 	edit_employer = Funcionario.get_or_404(id)
 
-#	data = request.args.json()
+	data = request.get_json()
+
+	if not valida_formulario(data):
+		abort(404)
 
 	edit_employer.name = data["name"]
 	edit_employer.idade = data["idade"]
 	edit_employer.email = data["email"]
 	edit_employer.setor = data["setor"]
 
+	res = make_response(jsonify({"message": "JSON recebido"}))
+
 	db.session.commit()
 
-	return 200
+	return res
 
 @login_required()
 @funcionarios.route("/exibe_all")
