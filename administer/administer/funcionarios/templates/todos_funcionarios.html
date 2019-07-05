@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+
+{%block title%} Home  {% endblock %}
+
+{% block content %}
+
+<div style="padding-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <main style="padding-top: 20px" class="mdl-layout__content mdl-color--grey-100">
+      <div class="mdl-grid demo-content">
+        
+        {% for employer in funcionarios.items %}
+
+          <!--Cards-->
+          <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+          <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+              <h2 class="mdl-card__title-text">{{employer.nome}}</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+              setor: {{employer.setor}}
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a href="{{url_for('funcionarios.exibe', id=employer.id)}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">Mais Informações</a>
+            </div>
+          </div>
+          </div>
+          <!--Cards-->
+
+        {% endfor %}
+
+        <br/>
+        
+        <nav style="position: static;" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% for page_num in funcionarios.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if funcionarios.page == page_num and page_num %}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="{{ url_for('funcionarios.exibe_all', page=page_num) }}">{{ page_num }}</a></li>
+                        </li>
+                    {% elif page_num %}
+                        <li class="page-item">
+                          <a class="page-link" href="{{ url_for('funcionarios.exibe_all', page=page_num) }}">{{ page_num }}</a></li>                             
+                        </li>
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav> 
+
+      </div>
+  </main>
+</div>
+
+{% endblock %}
