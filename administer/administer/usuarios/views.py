@@ -1,6 +1,7 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.usuarios.models import Admin
 from administer.usuarios.forms import AdicionarUserForm
+from administer.funcionarios.forms import funcionario_form
 from flask_login import LoginManager, current_user, login_user,login_required,logout_user
 from administer import login_required
 from administer.usuarios.avatar import adicionar_avatar
@@ -8,11 +9,13 @@ from flask_bcrypt import Bcrypt
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates')
 
-@login_required()
+#@login_required()
 @usuarios.route("/dashboard", methods=["POST", "GET"])
 def dashboard():
 	
-	return render_template("dashboard.html")
+	add_funcionario = funcionario_form()
+
+	return render_template("dashboard.html", add_funcionario=add_funcionario)
 
 @usuarios.route('/cadastro', methods=['POST', 'GET'])
 def adicionar():
