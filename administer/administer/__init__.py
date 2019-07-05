@@ -4,7 +4,6 @@ from flask import Flask, render_template, redirect, flash, url_for, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, current_user
-from datetime import datetime
 
 login_manager = LoginManager()
 
@@ -59,11 +58,3 @@ app.register_blueprint(principal)
 app.register_blueprint(usuarios,url_prefix='/usuarios')
 app.register_blueprint(funcionarios,url_prefix='/funcionarios')
 app.register_blueprint(error_pages)
-
-####################################
-############FUNÇÕES#################
-####################################
-
-@app.template_filter('converte')
-def converte(data):
-    return data.strftime("%Y-%m-%d")
