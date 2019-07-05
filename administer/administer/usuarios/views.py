@@ -1,7 +1,7 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.usuarios.models import Admin
 from administer.usuarios.forms import AdicionarUserForm, LoginForm
-from flask_login import LoginManager, current_user, login_user,login_required,logout_user
+from flask_login import LoginManager, current_user, login_user,logout_user
 from administer import login_required
 from administer.usuarios.avatar import adicionar_avatar
 from flask_bcrypt import Bcrypt
@@ -11,8 +11,8 @@ from administer.funcionarios.forms import funcionario_form
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates/usuarios')
 
-@login_required()
 @usuarios.route("/dashboard", methods=["POST", "GET"])
+@login_required()
 def dashboard():
 	
 	add_funcionario = funcionario_form()
@@ -77,7 +77,7 @@ def login():
 	return redirect(url_for('principal.index'))
 
 @usuarios.route('/logout')
-@login_required
+@login_required()
 def logout():
 	logout_user()
 	flash("Você foi deslogado com sucesso.", "success")
