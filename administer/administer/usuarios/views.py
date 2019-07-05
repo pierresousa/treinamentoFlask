@@ -7,6 +7,7 @@ from administer.usuarios.avatar import adicionar_avatar
 from flask_bcrypt import Bcrypt
 from administer import db
 from administer.funcionarios.models import Funcionario
+from administer.funcionarios.forms import funcionario_form
 
 usuarios = Blueprint('usuarios', __name__,template_folder='templates')
 
