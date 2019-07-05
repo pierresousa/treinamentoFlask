@@ -88,4 +88,4 @@ def funcionarios():
 	
 	page = request.args.get('page', 1, type=int)
 	funcionarios = Funcionario.query.filter_by(admin_id=current_user.id).paginate(page=page, per_page=12)
-	return render_template("todos_funcionarios.html", funcionarios)
+	return render_template("todos_funcionarios.html", funcionarios=funcionarios)
