@@ -3,17 +3,10 @@
 {%block title%} Home  {% endblock %}
 
 {% block content %}
-	<div class="row d-flex justify-content-center mt-5">
+
+
+	<canvas id="barChart"></canvas>
 	
-		<!--Grid column-->
-		<div class="col-md-12">
-	
-			<canvas id="barChart"></canvas>
-	
-		</div>
-		<!--Grid column-->
-	
-	</div>
 	<script>
 	//bar
 	var ctxB = document.getElementById("barChart").getContext('2d');
