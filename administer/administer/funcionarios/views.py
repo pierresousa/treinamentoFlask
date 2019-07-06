@@ -61,8 +61,6 @@ def adicionar():
 
 	return redirect(url_for('funcionarios.dashboard'))
 
-	
-
 
 @login_required()
 @funcionarios.route("/excluir/<int:id>", methods=["POST", "GET"])
