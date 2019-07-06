@@ -21,10 +21,8 @@ def dashboard():
 	for func in funcionarios:
 		totalSetor.append(func.setor)
 	
-	print(totalSetor)
-
 	tabela = [totalSetor.count('0'),totalSetor.count('1'),totalSetor.count('2'),totalSetor.count('3'),totalSetor.count('4'),totalSetor.count('5'),totalSetor.count('6')]
-	print(tabela)
+
 	return render_template("dashboard.html", add_funcionario=add_funcionario, tabela=tabela)
 
 @usuarios.route('/cadastro', methods=['POST', 'GET'])
