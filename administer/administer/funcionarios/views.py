@@ -74,7 +74,7 @@ def excluir(id):
 	db.session.delete(del_employer)
 	db.session.commit()
 
-	return redirect(url_for('usuarios.funcionarios'))
+	return redirect(url_for('funcionarios.meus_funcionarios'))
 
 @login_required()
 @funcionarios.route("/editar/<int:id>", methods=["POST", "GET"])
