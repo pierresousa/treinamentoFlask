@@ -7,21 +7,21 @@
      
 
 <!-- Default form subscription -->
-<form class="text-center border border-light p-5">
+<form class="form-control">
 
     <p class="h4 mb-4">Editar funcionário</p>
     <p>Trocar informações sobre os funcionários</p>
 
    <!-- Name -->
-    <input id="name" type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Name" value="{{funcionario.nome}}">
+    <input id="nome_edit" type="text" id="defaultSubscriptionFormPassword" class="form-control form-control-lg mb-4" placeholder="Name" value="{{funcionario.nome}}">
 
     <!-- Email -->
-    <input id="email" type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail" value="{{funcionario.email}}">
+    <input id="email_edit" type="email" id="defaultSubscriptionFormEmail" class="form-control form-control-lg mb-4" placeholder="E-mail" value="{{funcionario.email}}">
 
     <!-- Idade -->
-    <input id="idade" type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Idade" value="{{funcionario.idade}}">
+    <input id="idade_edit" type="text" id="defaultSubscriptionFormPassword" class="form-control form-control-lg mb-4" placeholder="Idade" value="{{funcionario.idade}}">
 
-    <select id="equipe" class="browser-default custom-select">
+    <select id="setor_edit" class="browser-default custom-select custom-select-lg">
       <option value="0">Eqp_Adm_Fin</option>
       <option value="1">Dev</option>
       <option value="2">Eqp_Proj</option>
@@ -32,7 +32,10 @@
     </select>
 
     <!-- Sign in button -->
-    <button class="btn btn-info btn-block" type="submit" onclick="atualiza()">Alterar Funcionário</button>
+    <br/>
+    <br/>
+    <br/>
+    <btn class="btn btn-info" onclick="atualiza()">Alterar Funcionário</btn>
 
 </form>
 <!-- Default form subscription -->
@@ -42,23 +45,25 @@
     
     function atualiza(){
         
-        let nome = $("#nome");
-        let email = $("#email");
-        let idade = $("#idade")
-        let setor = $("#setor")
+        let nome = $("#nome_edit").val();
+        let email = $("#email_edit").val();
+        let idade = $("#idade_edit").val();
+        let setor = $("#setor_edit").val();
 
         var update = {
-            nome: nome.value,
-            email: email.value,
-            idade: idade.value,
-            setor: setor.value
+            nome: nome,
+            email: email,
+            idade: idade,
+            setor: setor
         };
 
-        fetch('${window.origin}/editar/{{funcionario.id}}', {
+        console.log(update)
+
+        fetch(window.origin + '/funcionarios/editar/{{funcionario.id}}', {
             
-            methods: "POST",
+            method: "POST",
             credentials: "include", //Pega as informações em coock e coloca na requisição
-            body: JSON.stringfy(update),
+            body: JSON.stringify(update),
             cache: "no-cache",
             headers: new Headers({
                 "content-type": "application/json"
@@ -67,7 +72,7 @@
         }).then(function (response){
 
             if(response.status !== 200){
-                console.log("Response status foi boicotado: ${response.status}");
+                console.log("Response status foi boicotado: " + response.status);
                 return ;
             }
 
