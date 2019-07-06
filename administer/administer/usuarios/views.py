@@ -111,13 +111,3 @@ def perfil():
 		flash("Dados atualizados!","success")
 
 	return render_template("perfil.html", add_funcionario=add_funcionario, editar_user=editar_user)
-
-@login_required()
-@usuarios.route("/funcionarios", methods=["POST", "GET"])
-def funcionarios():
-	
-	add_funcionario = funcionario_form()
-
-	page = request.args.get('page', 1, type=int)
-	funcionarios = Funcionario.query.filter_by(admin_id=current_user.id).paginate(page=page, per_page=12)
-	return render_template("todos_funcionarios.html", funcionarios=funcionarios, add_funcionario=add_funcionario)

@@ -9,8 +9,21 @@
 <!-- Default form subscription -->
 <form class="form-control">
 
-    <p class="h4 mb-4">Editar funcionário</p>
-    <p>Trocar informações sobre os funcionários</p>
+    {% if funcionario.admin.id == current_user.id %}
+
+        <p class="h4 mb-4">Editar funcionário</p>
+        <p>Trocar informações sobre os funcionários</p>
+
+    {% else %}
+
+        <p class="h3 mb-3">Iformações do funcionário</p>
+        <p>Simples consulta</p>
+
+        <p class="h4 mb-4">Cadastrado por: {{ funcionario.admin.nome }}</p>
+
+    {% endif %}
+    <hr/>
+
 
    <!-- Name -->
     <input id="nome_edit" type="text" class="form-control form-control-lg mb-4" placeholder="Name" value="{{funcionario.nome}}">
@@ -46,6 +59,8 @@
 <!-- Default form subscription -->
      
 {% if funcionario.admin.id == current_user.id %}
+
+{%  block script %}
 
 <script type="text/javascript">
     
@@ -90,6 +105,8 @@
     }
 
 </script>
+
+{% endblock %}
 
 {% endif %}
 
