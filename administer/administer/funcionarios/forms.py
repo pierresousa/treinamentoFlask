@@ -9,5 +9,5 @@ class funcionario_form(FlaskForm ):
 	nome = StringField("Nome", validators=[DataRequired(message="Esse campo é obrigatório"), Length(min=3, max=120, message="Tamanho mínimo de 3 caracteres e maxímo de 120!")])
 	idade = IntegerField("Idade", validators=[DataRequired(message="Esse campo é obrigatório")])
 	email = StringField("Email", validators=[DataRequired(message="Esse campo é obrigatório"), Length(min=3, max=120, message="Tamanho mínimo de 3 caracteres e maxímo de 120!"), Email()])
-	setor = SelectField("Setor", validators=[DataRequired(message="Esse campo é obrigatório")], choices=[("0", "Eqp_Adm_Fin"), ("1", "Dev"), ("2", "Eqp_Proj"), ("3", "Eqp_RH"), ("4", "Eqp_Markt"), ("5", "Eqp_Pres"), ("6", "Eqp_Neg")])
+	setor = SelectField("Setor", validators=[DataRequired(message="Esse campo é obrigatório")], choices=[("0", "Equipe administrativo"), ("1", "Desenvolvedor"), ("2", "Equipe projetos"), ("3", "Equipe RH"), ("4", "Equipe marketing"), ("5", "Equipe presidencia"), ("6", "Equipe Negocios")])
 	submit = SubmitField("Novo Funcionário")

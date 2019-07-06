@@ -1,7 +1,7 @@
 from flask import (render_template, request, Blueprint, url_for, redirect, request, flash, abort)
 from administer.usuarios.models import Admin
 from administer.usuarios.forms import AdicionarUserForm, LoginForm, EditarUserForm
-from flask_login import LoginManager, current_user, login_user,logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user
 from administer import login_required
 from administer.usuarios.avatar import adicionar_avatar
 from flask_bcrypt import Bcrypt
@@ -76,7 +76,7 @@ def login():
 
 	return redirect(url_for('principal.index'))
 
-@usuarios.route('/logout')
+@usuarios.route('/logout', methods=['POST', 'GET'])
 @login_required()
 def logout():
 	logout_user()
