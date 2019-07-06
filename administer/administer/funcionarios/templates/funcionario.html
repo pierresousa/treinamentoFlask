@@ -4,65 +4,72 @@
 
 {% block content %}
 
-<div style="pediting-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-  <main style="pediting-top: 20px" class="mdl-layout__content mdl-color--grey-100">
      
 
-        <!-- Default form subscription -->
-        <form class="text-center border border-light p-5">
+<!-- Default form subscription -->
+<form class="form-control">
 
-            <p class="h4 mb-4">Editar funcionário</p>
-            <p>Trocar informações sobre os funcionários</p>
+    <p class="h4 mb-4">Editar funcionário</p>
+    <p>Trocar informações sobre os funcionários</p>
 
-           <!-- Name -->
-            <input id="name" type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Name">
+   <!-- Name -->
+    <input id="nome_edit" type="text" id="defaultSubscriptionFormPassword" class="form-control form-control-lg mb-4" placeholder="Name" value="{{funcionario.nome}}">
 
-            <!-- Email -->
-            <input id="email" type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail">
+    <!-- Email -->
+    <input id="email_edit" type="email" id="defaultSubscriptionFormEmail" class="form-control form-control-lg mb-4" placeholder="E-mail" value="{{funcionario.email}}">
 
-            <!-- Idade -->
-            <input id="idade" type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Idade">
+    <!-- Idade -->
+    <input id="idade_edit" type="text" id="defaultSubscriptionFormPassword" class="form-control form-control-lg mb-4" placeholder="Idade" value="{{funcionario.idade}}">
 
-            <select id="equipe" class="browser-default custom-select">
-              <option value="0">Eqp_Adm_Fin</option>
-              <option value="1">Dev</option>
-              <option value="2">Eqp_Proj</option>
-              <option value="3">Eqp_RH</option>
-              <option value="4">Eqp_Markt</option>
-              <option value="5">Eqp_Pres</option>
-              <option value="6">Eqp_Neg</option>    
-            </select>
+    <select id="setor_edit" class="browser-default custom-select custom-select-lg">
+      <option value="0">Eqp_Adm_Fin</option>
+      <option value="1">Dev</option>
+      <option value="2">Eqp_Proj</option>
+      <option value="3">Eqp_RH</option>
+      <option value="4">Eqp_Markt</option>
+      <option value="5">Eqp_Pres</option>
+      <option value="6">Eqp_Neg</option>    
+    </select>
 
-            <!-- Sign in button -->
-            <button class="btn btn-info btn-block" type="submit" onclick="atualiza()">Alterar Funcionário</button>
+    <!-- Sign in button -->
+    <br/>
+    <br/>
+    <br/>
+    {% if funcionario.admin.id == current_user.id %}
 
-        </form>
-        <!-- Default form subscription -->
+        <btn class="btn btn-info" onclick="atualiza()">Alterar</btn>
+        <a class="btn btn-danger" href="{{url_for('funcionarios.excluir', id=funcionario.id)}}" >Deletar</a>
+
+    {% endif %}
+
+</form>
+<!-- Default form subscription -->
      
-   </main>
-</div>
+{% if funcionario.admin.id == current_user.id %}
 
 <script type="text/javascript">
     
     function atualiza(){
         
-        let nome = $("#nome");
-        let email = $("#email");
-        let idade = $("#idade")
-        let setor = $("#setor")
+        let nome = $("#nome_edit").val();
+        let email = $("#email_edit").val();
+        let idade = $("#idade_edit").val();
+        let setor = $("#setor_edit").val();
 
         var update = {
-            nome: nome.value,
-            email: email.value,
-            idade: idade.value,
-            setor: setor.value
+            nome: nome,
+            email: email,
+            idade: idade,
+            setor: setor
         };
 
-        fetch('${window.origin}/editar/{{funcionario.id}}', {
+        console.log(update)
+
+        fetch(window.origin + '/funcionarios/editar/{{funcionario.id}}', {
             
-            methods: "POST",
+            method: "POST",
             credentials: "include", //Pega as informações em coock e coloca na requisição
-            body: JSON.stringfy(update),
+            body: JSON.stringify(update),
             cache: "no-cache",
             headers: new Headers({
                 "content-type": "application/json"
@@ -71,7 +78,7 @@
         }).then(function (response){
 
             if(response.status !== 200){
-                console.log("Response status foi boicotado: ${response.status}");
+                console.log("Response status foi boicotado: " + response.status);
                 return ;
             }
 
@@ -83,5 +90,7 @@
     }
 
 </script>
+
+{% endif %}
 
 {% endblock %}

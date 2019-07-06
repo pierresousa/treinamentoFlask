@@ -5,7 +5,7 @@ from administer.funcionarios.models import Funcionario
 from flask_login import LoginManager, current_user
 from administer import login_required, db
 
-funcionarios = Blueprint('funcionarios', __name__,template_folder='templates')
+funcionarios = Blueprint('funcionarios', __name__, template_folder='templates')
 
 def valida_formulario(data):
 
@@ -18,7 +18,7 @@ def valida_formulario(data):
 		len_email1 = len(data["email"].split("@"))
 		len_email2 = len(data["email"].split("@")[-1].split('.'))
 
-		if (len_email1 <= 0 or len_email >= 2):
+		if (len_email1 <= 0 or len_email1 > 2):
 			return False
 		if (len_email2 <= 0):
 			return False
@@ -70,35 +70,38 @@ def excluir(id):
 	
 	del_employer = Funcionario.query.get_or_404(id)
 
-	del_employer = Funcionario.query.get(id)
-	
-	if not del_employer:
-		abort(404)
-
-	res = make_response(jsonify({"message": "JSON recebido"}), 200)	
+	if del_employer.admin.id != current_user.id:
+		abort(403)
 
 	db.session.delete(del_employer)
 	db.session.commit()
 
-	return res
+	return redirect(url_for('usuarios.funcionarios'))
 
 @login_required()
 @funcionarios.route("/editar/<int:id>", methods=["POST", "GET"])
 def editar(id):
 	
-	edit_employer = Funcionario.get_or_404(id)
+	edit_employer = Funcionario.query.get_or_404(id)
+
+	if edit_employer.admin.id != current_user.id:
+
+		res = make_response(jsonify({"message": "Aqui não FDP"}), 403)
+		return res
 
 	data = request.get_json()
 
-	if not valida_formulario(data):
-		abort(404)
-
-	edit_employer.name = data["name"]
+	edit_employer.nome = data["nome"]
 	edit_employer.idade = data["idade"]
 	edit_employer.email = data["email"]
 	edit_employer.setor = data["setor"]
 
 	res = make_response(jsonify({"message": "JSON recebido"}), 200)
+
+	if not valida_formulario(data):
+		
+		res = make_response(jsonify({"message": "JSON crashado"}), 500)
+		return res
 
 	db.session.commit()
 

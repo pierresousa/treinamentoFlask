@@ -177,7 +177,7 @@
     <div style="padding-top: 50px" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
       <main style="padding-top: 20px" class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content text-center">
-          <div class="container">  
+          
             <!--Notificações-->
             {% for mess in get_flashed_messages() %}
               <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -192,7 +192,7 @@
             {%block content%} 
 
             {% endblock %}
-          </div>
+         
         </div>
       </main>
     </div>
