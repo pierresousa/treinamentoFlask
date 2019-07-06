@@ -5,6 +5,7 @@
 {% block content %}
 
 <!--INFORMAÇÕES SOBRE O USUARIO-->  
+<div class="container text-center">
     <!--AVATAR-->
     <div class="row">
         <div class="col-sm-12 text-center">
@@ -31,8 +32,8 @@
     </div>   
     
     <!--FORMULARIO PARA EDITAR PERFIL-->
-    <div class="row" id="editar_perfil" style=" display: none;">
-        <div class="dropdown-divider"></div>
+    <div class="row" id="editar_perfil" style=" display: none; padding-top: 30px;">
+        <div class="container">
         <form method="POST" enctype="multipart/form-data">
             {{ editar_user.hidden_tag() }}
             <div class="form-group">
@@ -67,7 +68,9 @@
                 {{ editar_user.submit(class="btn btn-primary") }}
             </div>
         </form>
+        </div>
     </div>
+</div>
 <!--FIM-->
 
 {% endblock %}
