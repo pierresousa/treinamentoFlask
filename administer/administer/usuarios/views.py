@@ -14,10 +14,18 @@ usuarios = Blueprint('usuarios', __name__,template_folder='templates/usuarios')
 @usuarios.route("/dashboard", methods=["POST", "GET"])
 @login_required()
 def dashboard():
-	
+	totalSetor =[]
 	add_funcionario = funcionario_form()
 
-	return render_template("dashboard.html", add_funcionario=add_funcionario)
+	funcionarios = Funcionario.query.filter_by(admin_id=current_user.id)
+	for func in funcionarios:
+		totalSetor.append(func.setor)
+	
+	print(totalSetor)
+
+	tabela = [totalSetor.count('0'),totalSetor.count('1'),totalSetor.count('2'),totalSetor.count('3'),totalSetor.count('4'),totalSetor.count('5'),totalSetor.count('6')]
+	print(tabela)
+	return render_template("dashboard.html", add_funcionario=add_funcionario, tabela=tabela)
 
 @usuarios.route('/cadastro', methods=['POST', 'GET'])
 def adicionar():
